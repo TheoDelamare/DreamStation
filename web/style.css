@@ -1,0 +1,24 @@
+#contenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+#contenu p {
+    position: absolute;
+    transform: translate(-50%, 0%);
+    padding: 10px;
+    background-color: #f0f0f0;
+    width: 200px;
+    height: 20px;
+    overflow: hidden;
+}
+
+#contenu p:hover {
+    width: 200px;
+    height: 200px;
+    overflow: scroll;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamStation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="contenu"></div>
+
+
+    <script>
+        function lireFichierTxt(chemin, callback) {
+            fetch(chemin)
+                .then(response => response.text())
+                .then(data => callback(data))
+                .catch(error => console.error('Une erreur est survenue :', error));
+        }
+
+        function afficherContenu(contenu, nomFichier) {
+            const divContenu = document.getElementById('contenu');
+            const nbParagraphes = divContenu.querySelectorAll('p').length;
+            const angle = (2 * Math.PI) / ( nbParagraphes + 1 );
+            const rayon = 150;
+            const centreX = divContenu.clientWidth / 2;
+            const centreY = divContenu.clientHeight / 2;
+
+            const newParagraph = document.createElement('p');
+            newParagraph.textContent = contenu;
+            divContenu.appendChild(newParagraph);
+
+            const paragraphs = divContenu.querySelectorAll('p');
+            paragraphs.forEach((paragraph, index) => {
+                const posX = centreX + rayon * Math.cos(index * angle);
+                const posY = centreY + rayon * Math.sin(index * angle);
+                paragraph.style.left = posX + 'px';
+                paragraph.style.top = posY + 'px';
+            });
+        }
+
+        // Récupération de la liste des fichiers .txt dans le sous-dossier
+        fetch('dreams/')
+            .then(response => response.text())
+            .then(data => {
+                // Traitement de la réponse pour obtenir une liste de noms de fichiers
+                const parser = new DOMParser();
+                const htmlDocument = parser.parseFromString(data, 'text/html');
+                const elementsAncre = htmlDocument.querySelectorAll('a');
+                const nomsFichiersTxt = Array.from(elementsAncre)
+                    .map(a => a.href)
+                    .filter(href => href.endsWith('.txt'));
+
+                // Pour chaque fichier .txt, lire et afficher le contenu
+                nomsFichiersTxt.forEach(nomFichier => {
+                    lireFichierTxt(nomFichier, contenu => {
+                        afficherContenu(contenu, nomFichier);
+                    });
+                });
+            })
+            .catch(error => console.error('Une erreur est survenue :', error));
+    </script>
+</body>
+</html>
