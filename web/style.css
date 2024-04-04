@@ -15,10 +15,12 @@
     width: 200px;
     height: 20px;
     overflow: hidden;
+    transition: 5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 #contenu p:hover {
     width: 200px;
     height: 200px;
     overflow: scroll;
+    transition: 5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
