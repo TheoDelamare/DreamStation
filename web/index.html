@@ -9,34 +9,99 @@
 <body>
     <div id="contenu"></div>
 
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "/web/lib/three.js-master/build/three.module.js",
+                "three/addons/": "/web/lib/three.js-master/examples/jsm/"
+            }
+        }
+    </script>
 
-    <script>
-        function lireFichierTxt(chemin, callback) {
-            fetch(chemin)
-                .then(response => response.text())
-                .then(data => callback(data))
-                .catch(error => console.error('Une erreur est survenue :', error));
+    <script type="module">
+        import * as THREE from "three";
+        import { CSS3DSprite, CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        const objects = [];
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        camera.position.z = 6000;
+
+
+        const renderer = new CSS3DRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        
+        const controls = new OrbitControls( camera, renderer.domElement );
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = .1;
+        controls.enableDamping = true;
+        controls.enableZoom = false;
+
+
+
+		document.getElementById( 'contenu' ).appendChild( renderer.domElement );
+
+        window.addEventListener( 'resize', onWindowResize );
+
+
+        function onWindowResize() {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize( window.innerWidth, window.innerHeight );
+
+            render();
+
         }
 
-        function afficherContenu(contenu, nomFichier) {
+
+        function animate() {
+            requestAnimationFrame( animate );
+            controls.update();
+            render();
+            // controls.update();
+        }
+
+        animate()
+        function render() {
+            renderer.render( scene, camera );
+        }
+
+
+
+
+        function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
             const divContenu = document.getElementById('contenu');
-            const nbParagraphes = divContenu.querySelectorAll('p').length;
-            const angle = (2 * Math.PI) / ( nbParagraphes + 1 );
-            const rayon = 150;
-            const centreX = divContenu.clientWidth / 2;
-            const centreY = divContenu.clientHeight / 2;
+            // const nbParagraphes = divContenu.querySelectorAll('p').length;
+            // const angle = (2 * Math.PI) / ( nbParagraphes + 1 );
+            // const rayon = 150;
+            // const centreX = divContenu.clientWidth / 2;
+            // const centreY = divContenu.clientHeight / 2;
 
             const newParagraph = document.createElement('p');
             newParagraph.textContent = contenu;
-            divContenu.appendChild(newParagraph);
+            const objectCSS = new CSS3DSprite( newParagraph );
+            objects.push( objectCSS );
+            scene.add( objectCSS );
 
-            const paragraphs = divContenu.querySelectorAll('p');
-            paragraphs.forEach((paragraph, index) => {
-                const posX = centreX + rayon * Math.cos(index * angle);
-                const posY = centreY + rayon * Math.sin(index * angle);
-                paragraph.style.left = posX + 'px';
-                paragraph.style.top = posY + 'px';
-            });
+            const vector = new THREE.Vector3();
+
+            const i = objects.length - 1;
+            const l = nomsFichiersTxt.length;
+            const phi = Math.acos( - 1 + ( 2 * i ) / l );
+            // const phi = Math.acos( - 1 + ( 2 * i ) / l ) - .5;
+            const theta = Math.sqrt( l * Math.PI * 3 ) * phi ;
+
+            // console.log("Object "+i+" phi:"+phi+" theta:"+theta);
+
+            objectCSS.position.setFromSphericalCoords( 4000, phi, theta );
+            // vector.copy( object.position ).multiplyScalar( 2 );
+            // object.lookAt( vector );
+
+
         }
 
         // Récupération de la liste des fichiers .txt dans le sous-dossier
@@ -52,13 +117,21 @@
                     .filter(href => href.endsWith('.txt'));
 
                 // Pour chaque fichier .txt, lire et afficher le contenu
-                nomsFichiersTxt.forEach(nomFichier => {
+                for(let nomFichier of nomsFichiersTxt) {
                     lireFichierTxt(nomFichier, contenu => {
-                        afficherContenu(contenu, nomFichier);
+                        afficherContenu(contenu, nomFichier, nomsFichiersTxt);
                     });
-                });
+                }
             })
             .catch(error => console.error('Une erreur est survenue :', error));
+
+            
+        function lireFichierTxt(chemin, callback) {
+            return fetch(chemin)
+                .then(response => response.text())
+                .then(data => callback(data))
+                .catch(error => console.error('Une erreur est survenue :', error));
+        }
     </script>
 </body>
 </html>
