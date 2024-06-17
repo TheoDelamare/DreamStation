@@ -8,6 +8,7 @@
 </head>
 <body>
     <div id="contenu"></div>
+    <div id="copied" class="hidden">Rêve copié</div>
 
     <script type="importmap">
         {
@@ -19,9 +20,15 @@
     </script>
 
     <script type="module">
+
         import * as THREE from "three";
         import { CSS3DSprite, CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+
+        // while (1===1) {
+        //     debugger
+        // }
 
         const objects = [];
 
@@ -80,10 +87,13 @@
             let dream = e.target.textContent;
             navigator.clipboard.writeText(dream).then(
                 function () {
-                    alert("Rêve copié")
+                    let copied = document.getElementById("copied");
+                    console.log(copied);
+                    copied.classList.remove("hidden");
+                    copied.classList.add("show");
                 },
                 function () {
-                    alert("oups :/ ça n'as pas fonctionnéent")
+                    alert("שגיאה בקריאת חלום")
                 },
                 );
         }
@@ -92,12 +102,15 @@
         function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
             const divContenu = document.getElementById('contenu');
 
+            const title = document.createElement('h1');
             const newParagraph = document.createElement('p');
-            newParagraph.textContent = contenu;
             
-            const button = document.createElement('button');
+            title.textContent = nomFichier;
+
+            newParagraph.textContent = contenu;
             newParagraph.onclick = copyTxt;
-            button.textContent = "HELLO";
+            
+            newParagraph.appendChild(title);
             const objectCSS = new CSS3DSprite( newParagraph );
             objects.push( objectCSS );
             scene.add( objectCSS );
