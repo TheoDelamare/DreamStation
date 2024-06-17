@@ -17,6 +17,7 @@ body {
 }
 
 #contenu p {
+    display: block;
     color: black;
     font-size: 12px;
     font-family: monospace;
@@ -26,7 +27,7 @@ body {
     padding: 10px;
     width: 3px;
     height: 3px;
-    overflow: hidden;
+    overflow: scroll;
     transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
@@ -41,4 +42,9 @@ body {
     transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     margin: 0;
     padding: 80px;
+}
+
+#contenu p:active {
+    background-color: #ccc;
+    transition: 0s;
 }

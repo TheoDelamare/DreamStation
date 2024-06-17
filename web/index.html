@@ -40,7 +40,7 @@
         controls.autoRotateSpeed = .1;
 
         controls.enableDamping = true;
-        controls.dampingFactor = .05;
+        controls.dampingFactor = .18;
 
         controls.enableZoom = false;
 
@@ -76,6 +76,17 @@
         }
 
 
+        function copyTxt(e) {
+            let dream = e.target.textContent;
+            navigator.clipboard.writeText(dream).then(
+                function () {
+                    alert("Rêve copié")
+                },
+                function () {
+                    alert("oups :/ ça n'as pas fonctionnéent")
+                },
+                );
+        }
 
 
         function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
@@ -83,6 +94,10 @@
 
             const newParagraph = document.createElement('p');
             newParagraph.textContent = contenu;
+            
+            const button = document.createElement('button');
+            newParagraph.onclick = copyTxt;
+            button.textContent = "HELLO";
             const objectCSS = new CSS3DSprite( newParagraph );
             objects.push( objectCSS );
             scene.add( objectCSS );
