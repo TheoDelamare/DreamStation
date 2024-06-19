@@ -16,6 +16,16 @@ body {
     /* top: 30vh; */
 }
 
+h1 {
+    font-size: 80px;
+    width: 1000px;
+    height: 250px;
+    color: black;
+    transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    margin: 0;
+    padding-bottom: 60px;
+}
+
 #contenu p {
     display: block;
     white-space: pre-wrap;
@@ -33,6 +43,7 @@ body {
 }
 
 #contenu p:hover {
+/* #contenu p { */
     font-size: 50px;
     width: 1000px;
     height: 2500px;

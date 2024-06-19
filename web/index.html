@@ -105,12 +105,12 @@
             const title = document.createElement('h1');
             const newParagraph = document.createElement('p');
             
-            title.textContent = nomFichier;
+            title.textContent = nomFichier.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
 
             newParagraph.textContent = contenu;
             newParagraph.onclick = copyTxt;
             
-            newParagraph.appendChild(title);
+            newParagraph.insertBefore(title, newParagraph.firstChild);
             const objectCSS = new CSS3DSprite( newParagraph );
             objects.push( objectCSS );
             scene.add( objectCSS );
@@ -158,6 +158,10 @@
                 .then(data => callback(data))
                 .catch(error => console.error('Une erreur est survenue :', error));
         }
+        // TODO :
+        // tags in dreams
+        // highligt corresponding dreams when hover
+
     </script>
 </body>
 </html>
