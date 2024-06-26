@@ -20,121 +20,133 @@
     </script>
 
     <script type="module">
-
         import * as THREE from "three";
         import { CSS3DSprite, CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-
-        // while (1===1) {
-        //     debugger
-        // }
-
         const objects = [];
 
         // Camera and controls parameters
-
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
         camera.position.z = 7000;
 
-
         const renderer = new CSS3DRenderer();
         renderer.setSize( window.innerWidth, window.innerHeight );
-        
+
         const controls = new OrbitControls( camera, renderer.domElement );
         controls.autoRotate = false;
         controls.autoRotateSpeed = .1;
-
         controls.enableDamping = true;
         controls.dampingFactor = .18;
-
         controls.enableZoom = false;
 
-
-
-		document.getElementById( 'contenu' ).appendChild( renderer.domElement );
+        document.getElementById( 'contenu' ).appendChild( renderer.domElement );
 
         window.addEventListener( 'resize', onWindowResize );
 
-
         function onWindowResize() {
-
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-
             renderer.setSize( window.innerWidth, window.innerHeight );
-
             render();
-
         }
-
 
         function animate() {
             requestAnimationFrame( animate );
             controls.update();
             render();
-            // controls.update();
         }
 
-        animate()
+        animate();
+
         function render() {
             renderer.render( scene, camera );
         }
 
+        // Fonction pour copier le reve brut et afficher le message "Rêve copié"
+// Fonction pour copier uniquement le contenu brut du rêve
+function copyTxt(e) {
+    // Trouver l'élément parent qui contient .dream-content
+    let target = e.target;
+    while (target && !target.classList.contains('dream-content')) {
+        target = target.parentNode;
+    }
+    if (target) {
+        let dreamContent = target.textContent;
+        navigator.clipboard.writeText(dreamContent).then(
+            function () {
+                let copied = document.getElementById("copied");
+                copied.classList.remove("hidden");
+                copied.classList.add("show");
 
-        function copyTxt(e) {
-            let dream = e.target.textContent;
-            navigator.clipboard.writeText(dream).then(
-                function () {
-                    let copied = document.getElementById("copied");
-                    console.log(copied);
-                    copied.classList.remove("hidden");
-                    copied.classList.add("show");
-                },
-                function () {
-                    alert("שגיאה בקריאת חלום")
-                },
-                );
-        }
-
-
-        function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
-            const divContenu = document.getElementById('contenu');
-
-            const title = document.createElement('h1');
-            const newParagraph = document.createElement('p');
-            
-            title.textContent = nomFichier.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
-
-            newParagraph.textContent = contenu;
-            newParagraph.onclick = copyTxt;
-            
-            newParagraph.insertBefore(title, newParagraph.firstChild);
-            const objectCSS = new CSS3DSprite( newParagraph );
-            objects.push( objectCSS );
-            scene.add( objectCSS );
-
-            const vector = new THREE.Vector3();
-
-            const i = objects.length - 1;
-            const l = nomsFichiersTxt.length;
-            const phi = Math.acos( - 1 + ( 2 * i ) / l );
-            // const phi = Math.acos( - 1 + ( 2 * i ) / l ) - .5;
-            const theta = Math.sqrt( l * Math.PI * 3 ) * phi ;
-
-            objectCSS.position.setFromSphericalCoords( 4000, phi, theta );
-            // vector.copy( object.position ).multiplyScalar( 2 );
-            // object.lookAt( vector );
+                // Disparition automatique du message après 3 secondes (3000 millisecondes)
+                setTimeout(function() {
+                    copied.classList.remove("show");
+                    copied.classList.add("hidden");
+                }, 3000); // 3000 ms = 3 secondes
+            },
+            function () {
+                alert("Erreur lors de la copie du rêve");
+            }
+        );
+    }
+}
 
 
-        }
+
+
+function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
+    const divContenu = document.getElementById('contenu');
+
+    const title = document.createElement('h1');
+    const tagsContainer = document.createElement('div');
+    const dreamParagraph = document.createElement('p');
+    const dreamContent = document.createElement('div');
+
+    tagsContainer.id = 'tags-container';
+    dreamContent.classList.add('dream-content');
+
+    // Extraction des tags
+    const lines = contenu.split('\n');
+    const tagsLine = lines.find(line => line.startsWith('Tags:'));
+    const tags = tagsLine ? tagsLine.replace('Tags:', '').split(',').map(tag => tag.trim()) : [];
+
+    title.textContent = decodeURIComponent(nomFichier.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.'));
+
+    const contentLines = lines.filter(line => !line.startsWith('Tags:')).join('\n');
+    dreamContent.textContent = contentLines;
+
+    if (tags.length > 0) {
+        tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.textContent = tag;
+            tagElement.classList.add('tag');
+            tagsContainer.appendChild(tagElement);
+        });
+    }
+
+    dreamParagraph.appendChild(title);
+    dreamParagraph.appendChild(tagsContainer);
+    dreamParagraph.appendChild(dreamContent);
+    dreamParagraph.onclick = copyTxt;
+
+    const objectCSS = new CSS3DSprite(dreamParagraph);
+    objects.push(objectCSS);
+    scene.add(objectCSS);
+
+    const i = objects.length - 1;
+    const l = nomsFichiersTxt.length;
+    const phi = Math.acos(-1 + (2 * i) / l);
+    const theta = Math.sqrt(l * Math.PI * 3) * phi;
+
+    objectCSS.position.setFromSphericalCoords(4000, phi, theta);
+}
 
         // Récupération de la liste des fichiers .txt dans le sous-dossier
         fetch('dreams/')
             .then(response => response.text())
             .then(data => {
-                // Traitement de la réponse pour obtenir une liste de noms de fichiers
                 const parser = new DOMParser();
                 const htmlDocument = parser.parseFromString(data, 'text/html');
                 const elementsAncre = htmlDocument.querySelectorAll('a');
@@ -142,8 +154,7 @@
                     .map(a => a.href)
                     .filter(href => href.endsWith('.txt'));
 
-                // Pour chaque fichier .txt, lire et afficher le contenu
-                for(let nomFichier of nomsFichiersTxt) {
+                for (let nomFichier of nomsFichiersTxt) {
                     lireFichierTxt(nomFichier, contenu => {
                         afficherContenu(contenu, nomFichier, nomsFichiersTxt);
                     });
@@ -151,17 +162,19 @@
             })
             .catch(error => console.error('Une erreur est survenue :', error));
 
-            
         function lireFichierTxt(chemin, callback) {
             return fetch(chemin)
                 .then(response => response.text())
-                .then(data => callback(data))
+                // .then(data => callback(data))
+                .then(data => {
+                    if (data.trim()) { // Ne pas appeler le callback si le fichier est vide
+                        callback(data);
+                    } else {
+                        console.warn(`Le fichier ${chemin} est vide et ne sera pas traité.`);
+                    }
+                })
                 .catch(error => console.error('Une erreur est survenue :', error));
         }
-        // TODO :
-        // tags in dreams
-        // highligt corresponding dreams when hover
-
     </script>
 </body>
 </html>

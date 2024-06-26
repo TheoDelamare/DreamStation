@@ -23,7 +23,7 @@ h1 {
     color: black;
     transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     margin: 0;
-    padding-bottom: 60px;
+    /* padding-bottom: 30px; */
 }
 
 #contenu p {
@@ -42,7 +42,7 @@ h1 {
     transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-#contenu p:hover {
+#contenu p {
 /* #contenu p { */
     font-size: 50px;
     width: 1000px;
@@ -61,9 +61,30 @@ h1 {
     transition: 0s;
 }
 
+#tags-container {
+    margin-top: 10px;
+    margin-bottom: 100px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 25px;
+    padding: 10px 15px;
+    border: 7px solid #000;
+    border-radius: 50px; /* Coins arrondis */
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transition pour l'effet de survol */
+}
+
+.tag:hover {
+    background-color: #9c9c9c; /* Gris clair au survol */
+}
+
+
 .hidden {
     color: rgba(0, 0, 0, 0);
-    transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: 5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .show {
