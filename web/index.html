@@ -21,53 +21,50 @@
 
     <script type="module">
         import * as THREE from "three";
-        import { CSS3DSprite, CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS3DSprite, CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-        const objects = [];
+const objects = [];
 
-        // Camera and controls parameters
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        camera.position.z = 7000;
+// Camera and controls parameters
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 7000;
 
-        const renderer = new CSS3DRenderer();
-        renderer.setSize( window.innerWidth, window.innerHeight );
+const renderer = new CSS3DRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-        const controls = new OrbitControls( camera, renderer.domElement );
-        controls.autoRotate = false;
-        controls.autoRotateSpeed = .1;
-        controls.enableDamping = true;
-        controls.dampingFactor = .18;
-        controls.enableZoom = false;
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.autoRotate = false;
+controls.autoRotateSpeed = .1;
+controls.enableDamping = true;
+controls.dampingFactor = .18;
+controls.enableZoom = false;
 
-        document.getElementById( 'contenu' ).appendChild( renderer.domElement );
+document.getElementById('contenu').appendChild(renderer.domElement);
 
-        window.addEventListener( 'resize', onWindowResize );
+window.addEventListener('resize', onWindowResize);
 
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize( window.innerWidth, window.innerHeight );
-            render();
-        }
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    render();
+}
 
-        function animate() {
-            requestAnimationFrame( animate );
-            controls.update();
-            render();
-        }
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    render();
+}
 
-        animate();
+animate();
 
-        function render() {
-            renderer.render( scene, camera );
-        }
+function render() {
+    renderer.render(scene, camera);
+}
 
-        // Fonction pour copier le reve brut et afficher le message "Rêve copié"
-// Fonction pour copier uniquement le contenu brut du rêve
 function copyTxt(e) {
-    // Trouver l'élément parent qui contient .dream-content
     let target = e.target;
     while (target && !target.classList.contains('dream-content')) {
         target = target.parentNode;
@@ -79,12 +76,10 @@ function copyTxt(e) {
                 let copied = document.getElementById("copied");
                 copied.classList.remove("hidden");
                 copied.classList.add("show");
-
-                // Disparition automatique du message après 3 secondes (3000 millisecondes)
-                setTimeout(function() {
+                setTimeout(function () {
                     copied.classList.remove("show");
                     copied.classList.add("hidden");
-                }, 3000); // 3000 ms = 3 secondes
+                }, 3000);
             },
             function () {
                 alert("Erreur lors de la copie du rêve");
@@ -93,21 +88,42 @@ function copyTxt(e) {
     }
 }
 
+function highlightTags(tagText) {
+    const dreams = document.querySelectorAll('.dream');
+    dreams.forEach(dream => {
+        const tags = dream.querySelectorAll('.tag');
+        tags.forEach(tag => {
+            if (tag.textContent === tagText) {
+                dream.classList.add('highlight');
+            }
+        });
+    });
+}
 
-
+function removeHighlightTags() {
+    const dreams = document.querySelectorAll('.dream');
+    dreams.forEach(dream => {
+        dream.classList.remove('highlight');
+    });
+}
 
 function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
+    if (!contenu.trim()) {
+        console.warn(`Le fichier ${nomFichier} est vide et ne sera pas affiché.`);
+        return;
+    }
+
     const divContenu = document.getElementById('contenu');
 
+    const dreamDiv = document.createElement('div');
     const title = document.createElement('h1');
     const tagsContainer = document.createElement('div');
-    const dreamParagraph = document.createElement('p');
     const dreamContent = document.createElement('div');
 
+    dreamDiv.classList.add('dream');
     tagsContainer.id = 'tags-container';
     dreamContent.classList.add('dream-content');
 
-    // Extraction des tags
     const lines = contenu.split('\n');
     const tagsLine = lines.find(line => line.startsWith('Tags:'));
     const tags = tagsLine ? tagsLine.replace('Tags:', '').split(',').map(tag => tag.trim()) : [];
@@ -122,16 +138,18 @@ function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
             const tagElement = document.createElement('span');
             tagElement.textContent = tag;
             tagElement.classList.add('tag');
+            tagElement.addEventListener('mouseover', () => highlightTags(tag));
+            tagElement.addEventListener('mouseout', removeHighlightTags);
             tagsContainer.appendChild(tagElement);
         });
     }
 
-    dreamParagraph.appendChild(title);
-    dreamParagraph.appendChild(tagsContainer);
-    dreamParagraph.appendChild(dreamContent);
-    dreamParagraph.onclick = copyTxt;
+    dreamDiv.appendChild(title);
+    dreamDiv.appendChild(tagsContainer);
+    dreamDiv.appendChild(dreamContent);
+    dreamDiv.onclick = copyTxt;
 
-    const objectCSS = new CSS3DSprite(dreamParagraph);
+    const objectCSS = new CSS3DSprite(dreamDiv);
     objects.push(objectCSS);
     scene.add(objectCSS);
 
@@ -143,38 +161,42 @@ function afficherContenu(contenu, nomFichier, nomsFichiersTxt) {
     objectCSS.position.setFromSphericalCoords(4000, phi, theta);
 }
 
-        // Récupération de la liste des fichiers .txt dans le sous-dossier
-        fetch('dreams/')
-            .then(response => response.text())
-            .then(data => {
-                const parser = new DOMParser();
-                const htmlDocument = parser.parseFromString(data, 'text/html');
-                const elementsAncre = htmlDocument.querySelectorAll('a');
-                const nomsFichiersTxt = Array.from(elementsAncre)
-                    .map(a => a.href)
-                    .filter(href => href.endsWith('.txt'));
+fetch('dreams/')
+    .then(response => response.text())
+    .then(data => {
+        const parser = new DOMParser();
+        const htmlDocument = parser.parseFromString(data, 'text/html');
+        const elementsAncre = htmlDocument.querySelectorAll('a');
+        const nomsFichiersTxt = Array.from(elementsAncre)
+            .map(a => a.href)
+            .filter(href => href.endsWith('.txt'));
 
-                for (let nomFichier of nomsFichiersTxt) {
-                    lireFichierTxt(nomFichier, contenu => {
-                        afficherContenu(contenu, nomFichier, nomsFichiersTxt);
-                    });
-                }
-            })
-            .catch(error => console.error('Une erreur est survenue :', error));
-
-        function lireFichierTxt(chemin, callback) {
-            return fetch(chemin)
-                .then(response => response.text())
-                // .then(data => callback(data))
-                .then(data => {
-                    if (data.trim()) { // Ne pas appeler le callback si le fichier est vide
-                        callback(data);
-                    } else {
-                        console.warn(`Le fichier ${chemin} est vide et ne sera pas traité.`);
-                    }
-                })
-                .catch(error => console.error('Une erreur est survenue :', error));
+        for (let nomFichier of nomsFichiersTxt) {
+            lireFichierTxt(nomFichier, contenu => {
+                afficherContenu(contenu, nomFichier, nomsFichiersTxt);
+            });
         }
+    })
+    .catch(error => console.error('Une erreur est survenue :', error));
+
+function lireFichierTxt(chemin, callback) {
+    return fetch(chemin)
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim()) {
+                callback(data);
+            } else {
+                console.warn(`Le fichier ${chemin} est vide et ne sera pas traité.`);
+            }
+        })
+        .catch(error => console.error('Une erreur est survenue :', error));
+}
+
+// TODO
+/*
+- effet jour nuit
+- voila
+*/
     </script>
 </body>
 </html>

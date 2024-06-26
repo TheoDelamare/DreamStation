@@ -26,7 +26,7 @@ h1 {
     /* padding-bottom: 30px; */
 }
 
-#contenu p {
+#contenu .dream {
     display: block;
     white-space: pre-wrap;
     color: black;
@@ -42,11 +42,12 @@ h1 {
     transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-#contenu p {
+#contenu .dream:hover {
 /* #contenu p { */
     font-size: 50px;
     width: 1000px;
     height: 2500px;
+    cursor: pointer;
     color: black;
     background-color: #fff;
     border: 10px solid #000;
@@ -56,7 +57,7 @@ h1 {
     padding: 80px;
 }
 
-#contenu p:active {
+#contenu .dream:active {
     background-color: #ccc;
     transition: 0s;
 }
@@ -69,18 +70,28 @@ h1 {
 .tag {
     display: inline-block;
     margin-right: 25px;
+    margin-top: 25px;
     padding: 10px 15px;
     border: 7px solid #000;
     border-radius: 50px; /* Coins arrondis */
     font-size: 0.9em;
-    cursor: pointer;
     transition: background-color 0.3s ease; /* Transition pour l'effet de survol */
 }
 
 .tag:hover {
+    cursor: default;
     background-color: #9c9c9c; /* Gris clair au survol */
 }
 
+/* Styles pour les rêves */
+.dream {
+    transition: background-color 0.3s;
+}
+
+/* Surlignage des rêves */
+#contenu .dream.highlight {
+    border: solid 30px rgb(189, 189, 189);
+}
 
 .hidden {
     color: rgba(0, 0, 0, 0);

@@ -1,0 +1,14 @@
+Le titre peut contenir n'importe quel character special
+Tout ce qui est ecrit à l'interieur de ce fichier constitue le reve, les 
+saut
+de
+ligne
+sont
+prit
+en
+compte
+
+et il y a juste cette ligne de tags que vous pouvez ajouter
+il suffit de suivre cette synthax :
+
+Tags: musique, apocalypse, train
