@@ -9,6 +9,7 @@
 <body>
     <div id="contenu"></div>
     <div id="copied" class="hidden">Rêve copié</div>
+    <div id="info"><a href="">About</a></div>
 
     <script type="importmap">
         {
@@ -192,10 +193,22 @@ function lireFichierTxt(chemin, callback) {
         .catch(error => console.error('Une erreur est survenue :', error));
 }
 
+
+// const interval = setInterval(function() {
+    var hour = new Date().getHours();
+    if ( hour < 7 || hour > 18 ) {
+        document.body.classList.add('night');
+        document.body.classList.remove('day');
+    } else {
+        document.body.classList.add('day');
+        document.body.classList.remove('night');
+    }
+//  }, 5000);
+
+
 // TODO
 /*
-- effet jour nuit
-- voila
+- information section
 */
     </script>
 </body>
