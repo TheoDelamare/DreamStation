@@ -126,9 +126,43 @@ h1 {
     /* transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1); */
 }
 
+#about {
+    top:50%;
+    left:50px;
+    width: 100px;
+
+    opacity: 0;
+
+    color: black;
+    font-style: normal;
+    position: absolute;
+    text-decoration: none;
+    font-size: 12px;
+    font-family: monospace;
+    text-align: center;
+    cursor: default;
+    font-style: none;
+
+    transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* .reveal {
+    opacity: 100%;
+    transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.hideabout {
+    opacity: 0%;
+    transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+} */
+
 #info {
     user-select: none;
+    all: unset;
+    color: black;
+    font-style: normal;
     position: absolute;
+    text-decoration: none;
     bottom:50px;
     left:50px;
     font-size: 12px;

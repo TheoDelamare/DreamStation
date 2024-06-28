@@ -9,7 +9,31 @@
 <body>
     <div id="contenu"></div>
     <div id="copied" class="hidden">Rêve copié</div>
-    <div id="info"><a href="">About</a></div>
+    <div id="info" onclick="showinfo()">About</div>
+    <div id="about">
+        <xml>
+            balblabla
+            qfsf
+            sqdfsdffdsfsd sf ss fsdf sqdfsdffdsfsdsdf
+            sqdfsdffdsfsd
+        </xml>
+    </div>
+
+    <script>
+        function showinfo() {
+            let aboutEl = document.getElementById('about');
+            console.log(aboutEl);
+            var about = window.getComputedStyle(aboutEl).getPropertyValue("opacity");
+            console.log(about);
+           if (about > 0) {
+            aboutEl.style.opacity = 0;         
+            console.log("off");   
+           } else {
+            aboutEl.style.opacity = 1;
+            console.log("on");   
+           }
+        }
+    </script>
 
     <script type="importmap">
         {
@@ -210,6 +234,8 @@ function lireFichierTxt(chemin, callback) {
 /*
 - information section
 */
+
+
     </script>
 </body>
 </html>
