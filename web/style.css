@@ -127,34 +127,26 @@ h1 {
 }
 
 #about {
-    top:50%;
+    bottom:100px;
     left:50px;
-    width: 100px;
+    width: 700px;
 
     opacity: 0;
 
     color: black;
     font-style: normal;
     position: absolute;
+    
+    text-align: left;
     text-decoration: none;
+
     font-size: 12px;
     font-family: monospace;
-    text-align: center;
+
     cursor: default;
-    font-style: none;
 
     transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-
-/* .reveal {
-    opacity: 100%;
-    transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.hideabout {
-    opacity: 0%;
-    transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-} */
 
 #info {
     user-select: none;
@@ -171,10 +163,16 @@ h1 {
     transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     cursor: default;
     font-style: none;
+    z-index: 100;
 }
 
 #info:hover {
     opacity: 100%;
     transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     cursor: pointer;
+}
+
+a {
+    color: #000;
+    text-decoration: underline;
 }
