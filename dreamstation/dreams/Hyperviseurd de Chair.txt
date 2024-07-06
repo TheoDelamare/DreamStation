@@ -1,5 +1,3 @@
-Hyperviseur de chair
-
 Dans un monde futuriste, à une époque incertaine, un nouveau maire est élu. Dans cette ville, le maire porte le lourd rôle d'HYPERVISEUR.
 
 Dans cette ville, l'Hyperviseur doit gérer tous les flux de la ville, son organisation géométrique, ses communications et tous ses aspects d'urbanisme. Pour ce faire, il doit littéralement fusionner avec le système pour devenir la ville. Le nouveau maire s'avance donc vers une sorte de pod, sous les félicitations de la foule de citoyens.
@@ -20,4 +18,4 @@ Fin
 
 LBVP - 2009
 
-Tags: Science-Fiction, catastrophe, Ville, Horreur
+Tags: science-fiction, catastrophe, ville, horreur

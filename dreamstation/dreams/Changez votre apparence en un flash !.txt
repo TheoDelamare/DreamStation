@@ -1,5 +1,3 @@
-Changez votre apparence en un flash !
-
 Dans un futur proche, une nouvelle technologie permettant de modifier son apparence avec un simple flash lumineux est créée et commercialisée en masse très rapidement. Cette technologie qui semble magique est si révolutionnaire que la plupart des gens en achètent, et sa facilité d'utilisation est déconcertante.
 
 Le dispositif prend la forme d'une sorte d'appareil photo rectangulaire, a peine plus gros que la main, dans lequel différentes prévisualisations peuvent être ajoutés a ce que l'ont voit au travers de l'objectif. En en simple flash on peux changer plusieurs aspects de notre apparence, allant de maquillage permanent (mais réversible) a l'état de surface de notre peau, la longueur et la couleur de nos ongles, dans certains cas les coupes de cheveux. Le fonctionnement technique de ce nouvel objet énigmatique n'est jamais clairement expliqué, mais les prix très bas et son efficacité incroyable fait que la quasi totalité de la population finit par l'utiliser. Seulement quelques personnes ont moi refusent de sen servir, presque comme intuition. Au fur et a mesure du temps de nouvelles versions sortent, et des études scientifiques sont faites pour évaluer les dangers de cette technologie, mais aucuns effets secondaires notables ne sont remarqués.
@@ -12,4 +10,4 @@ Fin
 
 LBVP - 2016
 
-Tags: Science-Fiction, catastrophe, Apocalypse, Horreur
+Tags: science-fiction, catastrophe, apocalypse, horreur

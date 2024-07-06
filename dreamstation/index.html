@@ -14,7 +14,7 @@
         <xml>
             De quoi avez vous rêvez cette nuit ?
 
-DreamStation est un projet d'archive de nos imaginaires inconscients, mondes vaporeux et incertains qui disparaissent souvent si ils ne sont pas saisis au moment du réveil. Sur les 10 dernières années, nous nous sommes prêtés a l'exercice, <a href="https://theodelamare.xyz/">Théo Delamare</a> et <a href="https://lbvp.org/">LBVP</a>, de garder une trace de nos rêves. En s'entrainant a noter systématiquement les rêves au moment du réveil, il devient de plus en plus facile de s'en souvenir, parfois même avec une précision étonnante. Ce site est une salle des archives toujours actualisée des mondes que nous explorons la nuit, sans même y porter attention. Toutes les histoires qui y sont écrites sont open source, et forment une base de données venant du monde du sommeil, que tout un chacun peut utiliser comme support de création, que ce soit pour de l'écriture, des productions cinématographiques, stop motion, jeux vidéo, illustration etc. 
+DreamStation est un projet d'archive de nos imaginaires inconscients, mondes vaporeux et incertains qui disparaissent souvent si ils ne sont pas saisis au moment du réveil. Sur les 10 dernières années, nous nous sommes prêtés a l'exercice, <a href="https://theodelamare.xyz/">Théo Delamare </a> et <a href="https://lbvp.org/">LBVP</a>, de garder une trace de nos rêves. En s'entrainant a noter systématiquement les rêves au moment du réveil, il devient de plus en plus facile de s'en souvenir, parfois même avec une précision étonnante. Ce site est une salle des archives toujours actualisée des mondes que nous explorons la nuit, sans même y porter attention. Toutes les histoires qui y sont écrites sont open source, et forment une base de données venant du monde du sommeil, que tout un chacun peut utiliser comme support de création, que ce soit pour de l'écriture, des productions cinématographiques, stop motion, jeux vidéo, illustration etc. 
 
 Si vous voulez utiliser l'une de ces histoires dans vos productions, mentionnez simplement ce site, et si vous voulez ajouter votre imaginaire inconscient a cette archive, nous vous reposons la question : 
 
@@ -25,15 +25,15 @@ Si vous voulez utiliser l'une de ces histoires dans vos productions, mentionnez 
     <script>
         function showinfo() {
             let aboutEl = document.getElementById('about');
-            console.log(aboutEl);
+            // console.log(aboutEl);
             var about = window.getComputedStyle(aboutEl).getPropertyValue("opacity");
             console.log(about);
            if (about > 0) {
             aboutEl.style.opacity = 0;         
-            console.log("off");   
+            // console.log("off");   
            } else {
             aboutEl.style.opacity = 1;
-            console.log("on");   
+            // console.log("on");   
            }
         }
     </script>
@@ -41,8 +41,8 @@ Si vous voulez utiliser l'une de ces histoires dans vos productions, mentionnez 
     <script type="importmap">
         {
             "imports": {
-                "three": "/web/lib/three.js-master/build/three.module.js",
-                "three/addons/": "/web/lib/three.js-master/examples/jsm/"
+                "three": "/dreamstation/lib/three.js-master/build/three.module.js",
+                "three/addons/": "/dreamstation/lib/three.js-master/examples/jsm/"
             }
         }
     </script>
@@ -68,7 +68,7 @@ controls.autoRotateSpeed = .1;
 controls.enableDamping = true;
 controls.dampingFactor = .18;
 controls.enableZoom = false;
-// disable translation
+controls.enablePan = false;
 
 document.getElementById('contenu').appendChild(renderer.domElement);
 
@@ -198,8 +198,10 @@ fetch('dreams/')
         const elementsAncre = htmlDocument.querySelectorAll('a');
         const nomsFichiersTxt = Array.from(elementsAncre)
             .map(a => a.href)
-            .filter(href => href.endsWith('.txt'));
-
+            .filter(href => href.endsWith('.txt'))
+            .map(href => `dreams/${href.split('/').pop()}`); // Ensure the correct path
+            
+            
         for (let nomFichier of nomsFichiersTxt) {
             lireFichierTxt(nomFichier, contenu => {
                 afficherContenu(contenu, nomFichier, nomsFichiersTxt);
@@ -232,12 +234,6 @@ function lireFichierTxt(chemin, callback) {
         document.body.classList.remove('night');
     }
 //  }, 5000);
-
-
-// TODO
-/*
-- information section
-*/
 
 
     </script>

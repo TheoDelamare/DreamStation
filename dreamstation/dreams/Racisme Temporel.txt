@@ -1,5 +1,3 @@
-Racisme temporel
-
 Dans une époque contemporaine dévastée, la terre est ravagée par des catastrophes naturelles rendant la surface invivable. Les restes de l'humanité vit sous terre dans des galeries qui semblent creusées il y a longtemps, mais les gens semblent avoir connus le monde a la surface avant les catastrophes.
 
 Un jour, dans les confins de ces galeries, un scientifique achève le chantier de sa vie. Dans un bunker enfoui profondément dans le sol, il travail depuis des années sur une gigantesque machine qui a l'apparence d'un accélérateur a particule. La machine s'active, faisant trembler les galeries aux dessus. Le temps suspens son vol alors qu'un déchirure apparait devant lui, comme une faille dans la réalité. Je comprend que cette machine est une énorme machine a voyager dans le temps, et que la faille est un passage vers une autre époque. Le scientifique remonte a la hâte prévenir les habitant de ce monde dévasté, qu'un monde meilleur les attend de l'autre coté de sa faille. Des hordes entières de personnes vivant dans la misère des sous terrain se mettent a le suivre, et traversent la faille sans hésitation.
@@ -18,4 +16,4 @@ FIN
 
 LBVP - 2016
 
-Tags: Post Apocalyptique, Guerre, Voyage Temporel, révolte
+Tags: post-apo, guerre, voyage-temporel, révolte

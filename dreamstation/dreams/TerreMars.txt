@@ -1,5 +1,3 @@
-Terre>Mars
-
 L'histoire prend place dans un futur lointain sur terre. A cette époque, la Terre a été exploitée de la casi totalité de ces ressources naturelles, tels que le pétrole, les métaux etc. Avec le peu de ressources restantes a l'humanité, les plus éminents chercheurs et scientifiques se réunissent pour trouver une solution a cette crise sans précédant. Dans un effort de guerre sans précédant les nations d'occidents s'unissent pour engager le plus gros chantier de l'humanité : connecter la terre a mars, a l'aide d'un gigantesque ascenseur spatial. Des milliards sont investis dans ce projets et un grand nombre d'infrastructures sont démontées pour être utilisées comme ressources pour ce projet.
 
 Afin de permettre une telle chose, un détails est a prendre en compte. La rotation de la terre doit être arrêtée. Le cycle jour nuit n'est plus qu'un lointain souvenir que seul la lune vient rappeler. La terre se voit alors scindée en deux zone distinctes. Une première zone glaciale constamment réchauffé et éclairée artificiellement. Et une seconde zone brulante, constamment harcelée par les rayons du soleil et donc invivable.
@@ -18,4 +16,4 @@ FIN
 
 LBVP - 2016
 
-Tags: Science-Fiction, Révolte, Espace, Apocalypse
+Tags: science-fiction, révolte, espace, apocalypse
