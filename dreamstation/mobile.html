@@ -100,71 +100,37 @@ Si vous voulez utiliser l'une de ces histoires dans vos productions, mentionnez 
             renderer.render(scene, camera);
         }
     
-    
-        // Ajout des événements pour les rêves
-document.querySelectorAll('.dream').forEach(dream => {
-    dream.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleDreamOpen(e);
-    });
 
-    // Un seul gestionnaire pour les appareils tactiles
-    dream.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        if (!e.target.classList.contains('dream-content')) {
-            toggleDreamOpen(e);
-        } else {
-            copyTxt(e);
+        // Fonction pour basculer l'état ouvert/fermé d'un rêve
+        function toggleDreamOpen(element) {
+            // copyTxt(element);
+            element.classList.toggle('open');
+            element.classList.toggle('closed');
         }
-    });
-});
 
-// Fonction pour basculer l'état ouvert/fermé d'un rêve
-function toggleDreamOpen(e) {
-    e.stopPropagation(); // Empêche la propagation de l'événement pour éviter les conflits avec le basculement
-    let target = e.currentTarget;
-    if (target) {
-        target.classList.toggle('open');
-    }
-}
-
-// Fonction pour copier le texte du rêve
-function copyTxt(e) {
-    e.stopPropagation(); // Empêche la propagation de l'événement pour éviter les conflits avec le basculement
-    let target = e.currentTarget;
-    if (target) {
-        let dreamContent = target.textContent;
-        navigator.clipboard.writeText(dreamContent).then(
-            function () {
-                let copied = document.getElementById("copied");
-                copied.classList.remove("hidden");
-                copied.classList.add("show");
-                setTimeout(function () {
-                    copied.classList.remove("show");
-                    copied.classList.add("hidden");
-                }, 3000);
-            },
-            function () {
-                alert("Erreur lors de la copie du rêve");
+        // Fonction pour copier le texte du rêve
+        function copyTxt(e) {
+            e.stopPropagation(); // Empêche la propagation de l'événement pour éviter les conflits avec le basculement
+            let target = e.currentTarget;
+            if (target) {
+                let dreamContent = target.textContent;
+                navigator.clipboard.writeText(dreamContent).then(
+                    function () {
+                        let copied = document.getElementById("copied");
+                        copied.classList.remove("hidden");
+                        copied.classList.add("show");
+                        setTimeout(function () {
+                            copied.classList.remove("show");
+                            copied.classList.add("hidden");
+                        }, 3000);
+                    },
+                    function () {
+                        alert("Erreur lors de la copie du rêve");
+                    }
+                );
             }
-        );
-    }
-}
+        }
 
-    
-        // Détecter si l'appareil est tactile
-        const isTouchDevice = 'ontouchstart' in document.documentElement;
-    
-        // Ajout des événements pour les rêves
-        document.querySelectorAll('.dream').forEach(dream => {
-            if (isTouchDevice) {
-                dream.addEventListener('touchstart', toggleDreamOpen);
-                dream.addEventListener('touchstart', copyTxt);
-            } else {
-                dream.addEventListener('click', toggleDreamOpen);
-                dream.addEventListener('click', copyTxt);
-            }
-        });
     
         function highlightTags(tagText) {
             const dreams = document.querySelectorAll('.dream');
@@ -191,14 +157,21 @@ function copyTxt(e) {
                 return;
             }
     
-            const divContenu = document.getElementById('contenu');
+            // const divContenu = document.getElementById('contenu');
     
             const dreamDiv = document.createElement('div');
+
+            dreamDiv.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleDreamOpen(dreamDiv);
+            });
+
             const title = document.createElement('h1');
             const tagsContainer = document.createElement('div');
             const dreamContent = document.createElement('div');
     
             dreamDiv.classList.add('dream');
+            dreamDiv.classList.add('closed');
             tagsContainer.id = 'tags-container';
             dreamContent.classList.add('dream-content');
     
